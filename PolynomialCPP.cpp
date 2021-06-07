@@ -157,35 +157,13 @@ class Polynomial
         }
         Polynomial operator*(const Polynomial& p1)    // overload the * operator 
         {
-            Polynomial temp(getDegree()+p1.getDegree());  // degree of multipllied polynomial
-            if (getDegree()==p1.getDegree())  
+            Polynomial temp(getDegree()+p1.getDegree());  // degree of multipllied polynomial  
+            
+            for(int i=0;i<=getDegree()+1;i++)
             {
-                for(int i=0;i<=getDegree()+1;i++)
-                {
-                    for (int j=0;j<=getDegree();j++)
-                        temp.getArray()[i+j] +=(getArray()[i]*p1.getArray()[i]);  //since all the elements of temp are already zero,we can do this(this is why we used calloc).   
-                }    
-            }
-            //if the degree is not same,the same concept in + is used.
-            else if(getDegree()>p1.getDegree())
-            {
-                //then we need to reallocate the memeory reserved for p1(without damaging the previous ones)
-                int* newp1=(int*)realloc(p1.getArray(),(getDegree()+1)*sizeof(int));
-                for(int i=p1.getDegree()+1;i<=getDegree();i++)
-                    newp1[i]=0;
-                for(int i=0;i<=getDegree();i++)
-                    for(int j=0;j<=getDegree();j++)
-                        temp.getArray()[i+j]+=(getArray()[i]*newp1[i]);   
-            }
-            else
-            {
-                int* newp1=(int*)realloc(getArray(),(p1.getDegree()+1)*sizeof(int)); 
-                for(int i=getDegree()+1;i<=p1.getDegree();i++)
-                    newp1[i]=0;    
-                for(int i=0;i<=p1.getDegree();i++)
-                    for(int j=0;j<=p1.getDegree();j++)
-                        temp.getArray()[i+j]+=(newp1[i]*p1.getArray()[i]);                     
-            }
+                for (int j=0;j<=getDegree();j++)
+                    temp.getArray()[i+j] +=(getArray()[i]*p1.getArray()[j]);  //since all the elements of temp are already zero,we can do this(this is why we used calloc).   
+            }    
             return temp;
 
         }    
