@@ -23,50 +23,41 @@ class Polynomial:
 
     def __add__(self,other:"Polynomial")->"Polynomial":
         """[Add two polynomials]"""
-        tempDegree=max([self.degree,other.degree])
+        tempDegree=max(self.degree,other.degree)
         temp=Polynomial(tempDegree)
-        def FillTemp():
-            temp.coefficients=[self.coefficients[i]+other.coefficients[i] for i in range(self.degree+1)]
+        def FillTemp(deg):
+            temp.coefficients=[self.coefficients[i]+other.coefficients[i] for i in range(deg+1)]
         if self.degree==other.degree:
-            FillTemp()
+            FillTemp(self.degree)
         elif self.degree>other.degree:
             other.coefficients.extend(0 for i in range(other.degree,self.degree+1))
-            FillTemp()
+            FillTemp(self.degree)
         else:
             self.coefficients.extend(0 for i in range(self.degree,other.degree+1))
-            FillTemp()
+            FillTemp(other.degree)
         return temp
 
     def __sub__(self,other:"Polynomial")->"Polynomial":
         """[Subtract two polynomials]"""  
-        tempDegree=max([self.degree,other.degree])
+        tempDegree=max(self.degree,other.degree)
         temp=Polynomial(tempDegree)
-        def FillTemp():
-            temp.coefficients=[self.coefficients[i]-other.coefficients[i] for i in range(self.degree+1)]
+        def FillTemp(deg):
+            temp.coefficients=[self.coefficients[i]-other.coefficients[i] for i in range(deg+1)]
         if self.degree==other.degree:
-            FillTemp()
+            FillTemp(self.degree)
         elif self.degree>other.degree:
             other.coefficients.extend(0 for i in range(other.degree,self.degree+1))
-            FillTemp()
+            FillTemp(self.degree)
         else:
             self.coefficients.extend(0 for i in range(self.degree,other.degree+1))
-            FillTemp()
+            FillTemp(other.degree)
         return temp
     def __mul__(self,other:"Polynomial")->"Polynomial":
         """[Multiply two polynomials]"""
         temp=Polynomial(self.degree+other.degree)
-        def PopulateTemp():
-            for i in range(self.degree+1):
-                for j in range(other.degree+1):
-                    temp.coefficients[i+j]+=(self.coefficients[i]*other.coefficients[j])    
-        if self.degree==other.degree:
-            PopulateTemp()
-        elif self.degree>other.degree:
-            other.coefficients.extend(0 for i in range(other.degree,self.degree+1))
-            PopulateTemp()
-        else:
-            self.coefficients.extend(0 for i in range(self.degree,other.degree+1))
-            PopulateTemp()
+        for i in range(self.degree+1):
+            for j in range(other.degree+1):
+                temp.coefficients[i+j]+=(self.coefficients[i]*other.coefficients[j])    
         return temp        
     def __repr__(self) -> str:
         """[Print polynomial object]"""
